@@ -1,0 +1,9 @@
+---
+  - hosts: webserver
+
+    vars_prompt:
+    - name: "name"
+      prompt: "Enter your name: "
+
+    tasks:
+    - debug: msg=" your name is {{name}}"

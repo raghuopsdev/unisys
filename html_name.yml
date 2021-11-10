@@ -1,0 +1,11 @@
+---
+- hosts: webserver
+  become: yes
+  vars_prompt:
+    - name: "username"
+      prompt: "Enter your name"
+  vars:
+      doc_root: /var/www/html/
+  tasks:
+    - name: Copy site file
+      template: src=templates/index.html dest={{doc_root}}/index.html mode=0644

@@ -1,0 +1,33 @@
+---
+- hosts: local
+  connection: local
+  gather_facts: false
+  vars_files:
+     - pass.yml
+  tasks:
+     - ec2_elb_lb:
+         aws_access_key: "{{ access_key }}"
+         aws_secret_key: "{{ secret_key }}"
+         name: demo
+         region: ap-south-1
+         state: present
+         zones:
+          - ap-south-1a
+          - ap-south-1b
+          - ap-south-1c
+         instance_ids: 
+          - i-0f856b7e0ae9aaf5a
+          - i-070c5bb341746d644
+         health_check:
+            ping_protocol: http # options are http, https, ssl, tcp
+            ping_port: 80
+            ping_path: "/index.html" # not required for tcp or ssl
+            response_timeout: 5 # seconds
+            interval: 30 # seconds
+            unhealthy_threshold: 2
+            healthy_threshold: 10
+         listeners:
+          - protocol: http # options are http, https, ssl, tcp
+            load_balancer_port: 80
+            instance_port: 80
+       register: demo

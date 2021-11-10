@@ -1,0 +1,9 @@
+---
+- hosts: webserver
+  become: yes
+  tasks:
+     - shell: echo "What is your name ? "
+       register: username
+
+    # - file: path=/tmp/info.txt owner={{username.stdout}}
+     - debug: msg=" Your name is {{username}}"
